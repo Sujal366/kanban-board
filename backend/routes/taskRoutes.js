@@ -32,14 +32,14 @@ router.post("/", async (req, res)=>{
 // UPDATE TASK STATUS
 router.put("/updateStatus/:id", async (req, res)=>{
     try{
-        const { status } = req.body;
+        const { status, newTimestamp } = req.body;
         const existingTask = await Task.findById(req.params.id);
         if (!existingTask) {
           return res.status(404).json({ error: "Task not found" });
         }
         const task = await Task.findByIdAndUpdate(
           req.params.id,
-          { status },
+          { status: status, timestamp: newTimestamp },
           { new: true }
         );
         res.json({message: "Task updated successfully"});
@@ -52,7 +52,7 @@ router.put("/updateStatus/:id", async (req, res)=>{
 // UPDATE TASK TITLE, DESCRIPTION AND PRIORITY
 router.put("/updateDetails/:id", async (req, res)=>{
     try{
-        const {title, description, priority} = req.body;
+        const {title, description, priority, newTimestamp} = req.body;
         if (!title && !description){
             return res.status(400).json({error: "Title is required"});
         }
@@ -62,7 +62,7 @@ router.put("/updateDetails/:id", async (req, res)=>{
         }
         const task = await Task.findByIdAndUpdate(
             req.params.id,
-            {title: title || existingTask.title, description: description || existingTask.description, priority: priority || existingTask.priority},
+            {title: title || existingTask.title, description: description || existingTask.description, priority: priority || existingTask.priority, timestamp: newTimestamp},
             {new: true}
         );
         res.json({message: "Task updated successfully"});

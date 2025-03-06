@@ -10,6 +10,7 @@ const Task = ({ task, updateTaskStatus, deleteTask, updateTaskDetails }) => {
   const [newDescription, setNewDescription] = useState(task.description);
   const [newPriority, setNewPriority] = useState(task.priority);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const date = new Date().toISOString();
 
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: "TASK",
@@ -24,7 +25,8 @@ const Task = ({ task, updateTaskStatus, deleteTask, updateTaskDetails }) => {
       alert("Task title cannot be empty");
       return;
     }
-    updateTaskDetails(task._id, newTitle, newDescription, newPriority);
+    const newTimestamp = (task.title === newTitle) && (task.description === newDescription) && (task.priority === newPriority) ? task.timestamp : date;
+    updateTaskDetails(task._id, newTitle, newDescription, newPriority, newTimestamp);
     setIsEditing(false);
   };
 
@@ -112,7 +114,7 @@ const Task = ({ task, updateTaskStatus, deleteTask, updateTaskDetails }) => {
                 <select
                   className="p-1 rounded-md bg-gray-200"
                   value={task.status}
-                  onChange={(e) => updateTaskStatus(task._id, e.target.value)}
+                  onChange={(e) => updateTaskStatus(task._id, e.target.value, date)}
                 >
                   <option value="todo">To Do</option>
                   <option value="in-progress">In Progress</option>

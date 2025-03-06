@@ -21,22 +21,23 @@ const Board = () => {
         }
     },[]);
 
-    const updateTaskStatus = (taskId, newStatus) => {
-        axios.put(`${API_URL}/updateStatus/${taskId}`, { status: newStatus }).then(() => {
+    const updateTaskStatus = (taskId, newStatus, newTimestamp) => {
+        axios.put(`${API_URL}/updateStatus/${taskId}`, { status: newStatus, newTimestamp: newTimestamp }).then(() => {
+          console.log(newTimestamp);
           setTasks((prevTasks) =>
             prevTasks.map((task) =>
-              task._id === taskId ? { ...task, status: newStatus } : task
+              task._id === taskId ? { ...task, status: newStatus, timestamp: newTimestamp } : task
             )
           );
         });
     }
 
-    const updateTaskDetails = (taskId, newTitle, newDescription, newPriority) => {
-      axios.put(`${API_URL}/updateDetails/${taskId}`, {title: newTitle, description: newDescription, priority: newPriority})
+    const updateTaskDetails = (taskId, newTitle, newDescription, newPriority, date) => {
+      axios.put(`${API_URL}/updateDetails/${taskId}`, {title: newTitle, description: newDescription, priority: newPriority, newTimestamp: date})
       .then(()=>{
         setTasks((prevTasks)=>
           prevTasks.map((task)=>
-            task._id===taskId ? {...task, title: newTitle, description: newDescription, priority: newPriority } : task
+            task._id===taskId ? {...task, title: newTitle, description: newDescription, priority: newPriority, timestamp: date } : task
           )
         )
       })
