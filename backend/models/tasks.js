@@ -18,6 +18,10 @@ const taskSchema= new mongoose.Schema({
         enum: ["low", "medium", "high"],
         default: "low",
     },
+    timestamp: {
+        type: Date,
+        default: Date.now,
+    }
 });
 
 module.exports = mongoose.model("Task", taskSchema);
