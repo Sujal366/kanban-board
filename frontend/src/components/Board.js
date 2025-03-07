@@ -23,7 +23,6 @@ const Board = () => {
 
     const updateTaskStatus = (taskId, newStatus, newTimestamp) => {
         axios.put(`${API_URL}/updateStatus/${taskId}`, { status: newStatus, newTimestamp: newTimestamp }).then(() => {
-          console.log(newTimestamp);
           setTasks((prevTasks) =>
             prevTasks.map((task) =>
               task._id === taskId ? { ...task, status: newStatus, timestamp: newTimestamp } : task

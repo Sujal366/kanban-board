@@ -14,7 +14,7 @@ const Task = ({ task, updateTaskStatus, deleteTask, updateTaskDetails }) => {
 
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: "TASK",
-    item: { id: task._id },
+    item: { id: task._id, status: task.status },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -89,7 +89,7 @@ const Task = ({ task, updateTaskStatus, deleteTask, updateTaskDetails }) => {
               </div>
             </div>
           ) : (
-            <div className="HAHA flex justify-between gap-2 md:flex-col lg:flex-row lg:items-center">
+            <div className="flex justify-between gap-2 md:flex-col lg:flex-row lg:items-center">
               <div className="flex flex-col gap-1">
                 <p className="text-sm text-gray-500">
                   Last Updated:{" "}

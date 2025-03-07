@@ -21,7 +21,9 @@ const Column = ({ title, tasks, updateTaskStatus, addTask, deleteTask,
   const [{ isOver }, dropRef] = useDrop(() => ({
     accept: "TASK",
     drop: (item) => {
-      updateTaskStatus(item.id, statusMap[title], new Date().toISOString());
+      if (statusMap[title] !== item.status) {
+        updateTaskStatus(item.id, statusMap[title], new Date().toISOString());
+      }
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
