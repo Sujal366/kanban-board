@@ -15,12 +15,20 @@ router.get("/", async (req, res)=>{
 
 // CREATE A TASK
 router.post("/", async (req, res)=>{
-    const { title, description, status, priority } = req.body;
+    const { title, description, status, priority, dueDate } = req.body;
     if (!title){
         return res.status(400).json({error: "Title is required"});
     }
+    let parsedDueDate = null;
+    if (dueDate) {
+        parsedDueDate = new Date(dueDate);
+        
+        if (isNaN(parsedDueDate.getTime())) {  // Check if dueDate is invalid
+            return res.status(400).json({ error: "Invalid dueDate format" });
+        }
+    }
     try{
-        const newTask = new Task({title: title, description: description, status: status, priority: priority});
+        const newTask = new Task({title: title, description: description, status: status, priority: priority, dueDate: parsedDueDate});
         await newTask.save();
         res.status(201).json({message: "Task created successfully"});
     }
@@ -31,12 +39,12 @@ router.post("/", async (req, res)=>{
 
 // UPDATE TASK STATUS
 router.put("/updateStatus/:id", async (req, res)=>{
+    const { status, newTimestamp } = req.body;
+    const existingTask = await Task.findById(req.params.id);
+    if (!existingTask) {
+      return res.status(404).json({ error: "Task not found" });
+    }
     try{
-        const { status, newTimestamp } = req.body;
-        const existingTask = await Task.findById(req.params.id);
-        if (!existingTask) {
-          return res.status(404).json({ error: "Task not found" });
-        }
         const task = await Task.findByIdAndUpdate(
           req.params.id,
           { status: status, timestamp: newTimestamp },
@@ -51,18 +59,27 @@ router.put("/updateStatus/:id", async (req, res)=>{
 
 // UPDATE TASK TITLE, DESCRIPTION AND PRIORITY
 router.put("/updateDetails/:id", async (req, res)=>{
+    const {title, description, priority, newTimestamp, newDueDate} = req.body;
+    if (!title){
+        return res.status(400).json({error: "Title is required"});
+    }
+    const existingTask = await Task.findById(req.params.id);
+    if (!existingTask) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+    let parsedNewDueDate = null;
+    if (newDueDate) {
+      parsedNewDueDate = new Date(newDueDate);
+
+      if (isNaN(parsedNewDueDate.getTime())) {
+        // Check if dueDate is invalid
+        return res.status(400).json({ error: "Invalid dueDate format" });
+      }
+    }
     try{
-        const {title, description, priority, newTimestamp} = req.body;
-        if (!title && !description){
-            return res.status(400).json({error: "Title is required"});
-        }
-        const existingTask = await Task.findById(req.params.id);
-        if (!existingTask) {
-          return res.status(404).json({ error: "Task not found" });
-        }
         const task = await Task.findByIdAndUpdate(
             req.params.id,
-            {title: title || existingTask.title, description: description || existingTask.description, priority: priority || existingTask.priority, timestamp: newTimestamp},
+            {title: title || existingTask.title, description: description || existingTask.description, priority: priority || existingTask.priority, timestamp: newTimestamp, dueDate: parsedNewDueDate || existingTask.dueDate},
             {new: true}
         );
         res.json({message: "Task updated successfully"});

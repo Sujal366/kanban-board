@@ -31,27 +31,27 @@ const Board = () => {
         });
     }
 
-    const updateTaskDetails = (taskId, newTitle, newDescription, newPriority, date) => {
-      axios.put(`${API_URL}/updateDetails/${taskId}`, {title: newTitle, description: newDescription, priority: newPriority, newTimestamp: date})
+    const updateTaskDetails = (taskId, newTitle, newDescription, newPriority, newTimestamp, newDueDate) => {
+      axios.put(`${API_URL}/updateDetails/${taskId}`, {title: newTitle, description: newDescription, priority: newPriority, newTimestamp: newTimestamp, newDueDate: newDueDate})
       .then(()=>{
         setTasks((prevTasks)=>
           prevTasks.map((task)=>
-            task._id===taskId ? {...task, title: newTitle, description: newDescription, priority: newPriority, timestamp: date } : task
+            task._id===taskId ? {...task, title: newTitle, description: newDescription, priority: newPriority, timestamp: newTimestamp, dueDate: newDueDate } : task
           )
         )
       })
     }
 
-    const addTask = (title, description, status, priority) => {
+    const addTask = (title, description, status, priority, dueDate) => {
       const tempId = Date.now().toString(); // Temporary ID for instant UI update
-      const newTask = { _id: tempId, title, status, description, priority };
+      const newTask = { _id: tempId, title, status, description, priority, dueDate };
 
       // Optimistically update the UI first
       setTasks((prevTasks) => [...prevTasks, newTask]);
 
       // Send request to backend
       axios
-        .post(API_URL, { title, description, status, priority })
+        .post(API_URL, { title, description, status, priority, dueDate })
         .then(() => {
           // Fetch latest tasks to ensure state sync
           return axios.get(API_URL);
@@ -77,7 +77,7 @@ const Board = () => {
     };
 
   return (
-    <div className="md:flex md:justify-between pl-4 pr-4 pb-4 gap-2 h-full">
+    <div className="md:flex md:justify-between pl-4 pr-4 pb-4 gap-2">
       <Column
         title="To Do"
         tasks={tasks.filter((task) => task.status === "todo")}

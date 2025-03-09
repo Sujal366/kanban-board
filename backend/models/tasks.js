@@ -21,6 +21,9 @@ const taskSchema= new mongoose.Schema({
     timestamp: {
         type: Date,
         default: Date.now,
+    },
+    dueDate: {
+        type: Date,
     }
 });
 
