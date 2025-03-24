@@ -2,6 +2,10 @@
 
 A simple yet powerful **Task Manager** that helps you organize and track your tasks efficiently. The project is extended into a **Kanban Board** for better task visualization and workflow management.
 
+## 🎥 Demo Working Video
+
+https://github.com/user-attachments/assets/3e33eeca-4a64-4ccc-9e94-4f91afe6a4a7
+
 ## 🚀 Features
 - **Create, Read, Update, Delete (CRUD)** tasks
 - **Drag and Drop** functionality for task management (Kanban-style)
@@ -33,9 +37,6 @@ A simple yet powerful **Task Manager** that helps you organize and track your ta
 │── .env  # Environment variables
 ```
 
-## 🎥 Demo Working Video
-
-https://github.com/user-attachments/assets/3e33eeca-4a64-4ccc-9e94-4f91afe6a4a7
 
 
 
