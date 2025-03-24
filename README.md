@@ -33,6 +33,21 @@ A simple yet powerful **Task Manager** that helps you organize and track your ta
 │── .env  # Environment variables
 ```
 
+## 🎥 Demo Working Video
+
+https://github.com/user-attachments/assets/3e33eeca-4a64-4ccc-9e94-4f91afe6a4a7
+
+
+
+
+## 🖼 Screenshots
+
+### Dark Mode
+<img width="1440" alt="Dark Mode" src="https://github.com/user-attachments/assets/22a3ee9a-da9a-4869-8e39-fef1782d7d1d" />
+
+### Light Mode
+<img width="1440" alt="Light Mode" src="https://github.com/user-attachments/assets/5059f818-c723-4c9b-a552-72e22068afcb" />
+
 ## 🚀 Getting Started
 ### 1️⃣ Clone the Repository
 ```sh
