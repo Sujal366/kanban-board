@@ -36,8 +36,8 @@ A simple yet powerful **Task Manager** that helps you organize and track your ta
 ## 🚀 Getting Started
 ### 1️⃣ Clone the Repository
 ```sh
-git clone https://github.com/yourusername/task-manager.git
-cd task-manager
+git clone https://github.com/Sujal366/kanban-board.git
+cd kanban-board
 ```
 
 ### 2️⃣ Install Dependencies
